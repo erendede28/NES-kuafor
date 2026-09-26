@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NES KUAFOR SALONU</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #0A0A0A; color: #E5E7EB; }
+        .font-serif-title { font-family: 'Playfair Display', serif; }
+        .gold-text { color: #D4AF37; }
+        .gold-border { border-color: #D4AF37; }
+        .gold-bg { background-color: #D4AF37; }
+        .gold-gradient { background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%); }
+        /* Haritayı Beyaz/Açık Tema Yapma */
+        .map-iframe {
+            filter: invert(1) hue-rotate(180deg) brightness(1.2) contrast(0.9);
+        }
+    </style>
+</head>
+<body class="bg-[#0A0A0A] text-gray-200">
+
+    <!-- OTOMATİK HATIRLATICI BİLDİRİM BANDI -->
+    <div id="reminderBanner" class="hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#D4AF37] via-[#C5A880] to-[#D4AF37] text-black px-4 py-3 shadow-lg flex items-center justify-between">
+        <div class="max-w-7xl mx-auto flex items-center gap-3 text-xs sm:text-sm font-semibold tracking-wide">
+            <i class="fa-solid fa-bell text-black animate-bounce"></i>
+            <div id="reminderText"></div>
+        </div>
+    </div>
+
+    <!-- NAVİGASYON -->
+    <nav id="mainNav" class="fixed w-full bg-[#0A0A0A]/90 backdrop-blur-md border-b border-[#D4AF37]/20 z-40 top-0 left-0 transition-all">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl sm:text-2xl font-bold font-serif-title gold-text flex items-center gap-2">
+                <i class="fa-solid fa-crown text-[#D4AF37]"></i> NES KUAFOR SALONU
+            </a>
+            <div class="hidden md:flex gap-6 font-medium text-gray-300 items-center">
+                <a href="#" class="hover:text-[#D4AF37] transition">Ana Sayfa</a>
+                <a href="#hizmetler" class="hover:text-[#D4AF37] transition">Hizmetler & Fiyatlar</a>
+                <a href="#galeri" class="hover:text-[#D4AF37] transition">Galeri</a>
+                <a href="#randevu" class="hover:text-[#D4AF37] transition">Randevu Al</a>
+                <a href="#konum" class="hover:text-[#D4AF37] transition">İletişim & Konum</a>
+                <a href="#" id="myAppsNavLink" onclick="openMyAppModal()" class="hidden hover:text-[#D4AF37] transition text-[#D4AF37]"><i class="fa-solid fa-calendar-days mr-1"></i> Randevularım</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <div id="loggedInUserBadge" class="hidden items-center gap-2 bg-[#18181B] border border-[#D4AF37]/30 px-3 py-1.5 rounded-full">
+                    <span id="userNameSpan" class="text-xs text-[#F3E5AB] font-medium"></span>
+                    <button onclick="handleLogout()" class="text-gray-400 hover:text-red-400" title="Çıkış"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+                <div id="authButtonsContainer" class="flex items-center gap-2">
+                    <button onclick="openAuthModal('login')" class="border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition">
+                        Giriş Yap
+                    </button>
+                    <button onclick="openAuthModal('register')" class="gold-gradient text-black px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-semibold uppercase tracking-wider hover:opacity-90 transition">
+                        Üye Ol
+                    </button>
+                </div>
+                <button onclick="openAdminModal()" class="bg-gray-800 border border-gray-700 hover:border-[#D4AF37] text-white p-2.5 rounded-full text-sm transition" title="Admin Paneli">
+                    <i class="fa-solid fa-lock text-[#D4AF37]"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO BÖLÜMÜ -->
+    <section class="pt-36 pb-24 px-4 bg-gradient-to-b from-[#121212] to-[#0A0A0A] border-b border-gray-800">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="gold-text font-semibold tracking-widest text-xs uppercase bg-[#D4AF37]/10 px-3 py-1.5 rounded-full border border-[#D4AF37]/30">Lüks Saç Tasarım Atölyesi</span>
+                <h1 class="text-4xl md:text-6xl font-bold font-serif-title gold-text mt-4 mb-6 leading-tight">
+                    Zarafetin ve Estetiğin Yeni Adresi
+                </h1>
+                <p class="text-gray-400 mb-8 text-lg font-light">
+                    Kişiye özel lüks kesimler, profesyonel renklendirme ve eşsiz saç bakımlarıyla kendinizi özel hissedin.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#randevu" class="gold-gradient text-black px-8 py-3.5 rounded-full font-semibold text-lg shadow-lg hover:opacity-90 transition">
+                        Hemen Randevu Al
+                    </a>
+                    <a href="#hizmetler" class="border border-[#D4AF37]/50 text-gray-200 hover:border-[#D4AF37] px-8 py-3.5 rounded-full font-medium text-lg transition">
+                        Fiyat Listesi
+                    </a>
+                </div>
+            </div>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80" alt="NES KUAFOR SALONU" class="rounded-3xl shadow-2xl border border-[#D4AF37]/30 object-cover h-[450px] w-full">
+            </div>
+        </div>
+    </section>
+
+    <!-- HİZMETLER VE FİYATLAR -->
+    <section id="hizmetler" class="py-24 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="gold-text text-sm tracking-widest uppercase">Kusursuz Hizmet</span>
+            <h2 class="text-3xl md:text-4xl font-bold font-serif-title gold-text mt-2">Hizmetlerimiz & Fiyat Listesi</h2>
+            <div class="w-24 h-0.5 bg-[#D4AF37] mx-auto mt-4"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-[#121212] p-8 rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37] transition shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold font-serif-title text-gray-100">Kesim & Şekillendirme</h3>
+                    <span class="gold-text font-bold text-lg">750 ₺</span>
+                </div>
+                <p class="text-gray-400 text-sm">Yüz tipinize özel profesyonel tasarım kesim ve fön uygulaması.</p>
+                <button onclick="selectServiceTab('Kesim & Şekillendirme (750 ₺)')" class="mt-6 w-full py-2.5 rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</button>
+            </div>
+            <div class="bg-[#121212] p-8 rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37] transition shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold font-serif-title text-gray-100">Renklendirme / Ombre</h3>
+                    <span class="gold-text font-bold text-lg">3.500 ₺</span>
+                </div>
+                <p class="text-gray-400 text-sm">Doğal geçişli özel teknikler, tonlama ve yıpranma karşıtı bağ koruma.</p>
+                <button onclick="selectServiceTab('Renklendirme / Ombre (3.500 ₺)')" class="mt-6 w-full py-2.5 rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</button>
+            </div>
+            <div class="bg-[#121212] p-8 rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37] transition shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold font-serif-title text-gray-100">Keratin Bakım</h3>
+                    <span class="gold-text font-bold text-lg">1.800 ₺</span>
+                </div>
+                <p class="text-gray-400 text-sm">Yoğun onarım, ipeksi parlaklık ve pürüzsüzleştirici lüks bakım.</p>
+                <button onclick="selectServiceTab('Keratin Bakım (1.800 ₺)')" class="mt-6 w-full py-2.5 rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</button>
+            </div>
+            <div class="bg-[#121212] p-8 rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37] transition shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold font-serif-title text-gray-100">Gelin Paketi</h3>
+                    <span class="gold-text font-bold text-lg">7.500 ₺</span>
+                </div>
+                <p class="text-gray-400 text-sm">Özel gününüze özel prova, gelin saçı, porselen makyaj ve VIP oda.</p>
+                <button onclick="selectServiceTab('Gelin Paketi (7.500 ₺)')" class="mt-6 w-full py-2.5 rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</button>
+            </div>
+            <div class="bg-[#121212] p-8 rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37] transition shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold font-serif-title text-gray-100">Dip / Tüm Boya</h3>
+                    <span class="gold-text font-bold text-lg">1.200 ₺</span>
+                </div>
+                <p class="text-gray-400 text-sm">Amonyaksız özel seri boyalarla canlı, kalıcı renkler.</p>
+                <button onclick="selectServiceTab('Dip / Tüm Boya (1.200 ₺)')" class="mt-6 w-full py-2.5 rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</button>
+            </div>
+            <div class="bg-[#121212] p-8 rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37] transition shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold font-serif-title text-gray-100">Spa Manikür & Pedikür</h3>
+                    <span class="gold-text font-bold text-lg">900 ₺</span>
+                </div>
+                <p class="text-gray-400 text-sm">Hijyenik, kişiye özel setlerle lüks el ve ayak bakımı.</p>
+                <button onclick="selectServiceTab('Spa Manikür & Pedikür (900 ₺)')" class="mt-6 w-full py-2.5 rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERİ -->
+    <section id="galeri" class="py-24 px-4 bg-[#0F0F0F] border-t border-b border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="gold-text text-sm tracking-widest uppercase">Portfolyo</span>
+                <h2 class="text-3xl md:text-4xl font-bold font-serif-title gold-text mt-2">Seçkin Tasarımlarımız</h2>
+                <div class="w-24 h-0.5 bg-[#D4AF37] mx-auto mt-4"></div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="overflow-hidden rounded-2xl h-72 border border-gray-800 relative group cursor-pointer" onclick="openGalleryItem('Gelin Saçı Tasarımı', 'Gelin')">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Tasarım">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <span class="text-[#D4AF37] font-semibold border border-[#D4AF37] px-4 py-2 rounded-full text-xs">Randevu Al</span>
+                    </div>
+                </div>
+                <div class="overflow-hidden rounded-2xl h-72 border border-gray-800 relative group cursor-pointer" onclick="openGalleryItem('Karamel Ombre', 'Renklendirme')">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Tasarım">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <span class="text-[#D4AF37] font-semibold border border-[#D4AF37] px-4 py-2 rounded-full text-xs">Randevu Al</span>
+                    </div>
+                </div>
+                <div class="overflow-hidden rounded-2xl h-72 border border-gray-800 relative group cursor-pointer" onclick="openGalleryItem('Modern Kesim', 'Kesim')">
+                    <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Tasarım">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <span class="text-[#D4AF37] font-semibold border border-[#D4AF37] px-4 py-2 rounded-full text-xs">Randevu Al</span>
+                    </div>
+                </div>
+                <div class="overflow-hidden rounded-2xl h-72 border border-gray-800 relative group cursor-pointer" onclick="openGalleryItem('Spa & Nail', 'Bakım')">
+                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Tasarım">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <span class="text-[#D4AF37] font-semibold border border-[#D4AF37] px-4 py-2 rounded-full text-xs">Randevu Al</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RANDEVU FORMU -->
+    <section id="randevu" class="py-24 px-4 max-w-4xl mx-auto">
+        <div class="bg-[#121212] p-8 md:p-12 rounded-3xl shadow-2xl border border-[#D4AF37]/30 relative">
+            <div id="bookingLockOverlay" class="hidden absolute inset-0 bg-black/85 backdrop-blur-sm z-10 rounded-3xl flex flex-col items-center justify-center text-center p-6 space-y-4">
+                <i class="fa-solid fa-lock text-4xl text-[#D4AF37]"></i>
+                <h3 class="text-xl font-bold font-serif-title text-[#F3E5AB]">Randevu Oluşturmak İçin Giriş Yapmalısınız</h3>
+                <p class="text-xs text-gray-300 max-w-sm">Randevu talebi gönderebilmek ve takip edebilmek için lütfen hesabınıza giriş yapın veya üye olun.</p>
+                <div class="flex gap-3">
+                    <button onclick="openAuthModal('login')" class="px-5 py-2.5 rounded-xl border border-[#D4AF37] text-[#D4AF37] text-xs font-bold uppercase">Giriş Yap</button>
+                    <button onclick="openAuthModal('register')" class="px-5 py-2.5 rounded-xl gold-gradient text-black text-xs font-bold uppercase">Üye Ol</button>
+                </div>
+            </div>
+
+            <div class="text-center mb-10">
+                <span class="gold-text text-sm tracking-widest uppercase">VIP Rezervasyon</span>
+                <h2 class="text-3xl font-bold font-serif-title gold-text mt-2">Randevu Oluşturun</h2>
+                <p class="text-gray-400 text-sm mt-1">Size en uygun zamanı seçin, talebinizi hemen oluşturalım.</p>
+            </div>
+
+            <form onsubmit="handleBooking(event)" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Adınız Soyadınız</label>
+                        <input type="text" id="bName" required placeholder="Giriş yapmış kullanıcı" readonly class="w-full bg-[#0A0A0A] border border-gray-800 text-gray-400 px-4 py-3 rounded-xl focus:outline-none cursor-not-allowed">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Telefon Numaranız</label>
+                        <input type="tel" id="bPhone" required placeholder="05XX XXX XX XX" class="w-full bg-[#0A0A0A] border border-gray-800 focus:border-[#D4AF37] text-white px-4 py-3 rounded-xl focus:outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Hizmet Seçimi</label>
+                    <select id="bService" required class="w-full bg-[#0A0A0A] border border-gray-800 focus:border-[#D4AF37] text-white px-4 py-3 rounded-xl focus:outline-none">
+                        <option value="">Lütfen Hizmet Seçiniz</option>
+                        <option value="Kesim & Şekillendirme (750 ₺)">Kesim & Şekillendirme (750 ₺)</option>
+                        <option value="Renklendirme / Ombre (3.500 ₺)">Renklendirme / Ombre (3.500 ₺)</option>
+                        <option value="Keratin Bakım (1.800 ₺)">Keratin Bakım (1.800 ₺)</option>
+                        <option value="Gelin Paketi (7.500 ₺)">Gelin Paketi (7.500 ₺)</option>
+                        <option value="Dip / Tüm Boya (1.200 ₺)">Dip / Tüm Boya (1.200 ₺)</option>
+                        <option value="Spa Manikür & Pedikür (900 ₺)">Spa Manikür & Pedikür (900 ₺)</option>
+                    </select>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Tarih</label>
+                        <input type="date" id="bDate" required onclick="this.showPicker && this.showPicker()" class="w-full bg-[#0A0A0A] border border-gray-800 focus:border-[#D4AF37] text-white px-4 py-3 rounded-xl focus:outline-none cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Saat</label>
+                        <select id="bTime" required class="w-full bg-[#0A0A0A] border border-gray-800 focus:border-[#D4AF37] text-white px-4 py-3 rounded-xl focus:outline-none">
+                            <option value="">Saat Seçiniz</option>
+                            <option value="10:00">10:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="18:00">18:00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Notunuz / İstediğiniz Model Görseli</label>
+                    <textarea id="bNote" rows="3" placeholder="Örn: Bu saç modelinden istiyorum veya saçım hakkında özel not..." class="w-full bg-[#0A0A0A] border border-gray-800 focus:border-[#D4AF37] text-white px-4 py-3 rounded-xl focus:outline-none mb-3"></textarea>
+                    <input type="file" id="bFile" accept="image/*" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#D4AF37] file:text-black hover:file:bg-[#c5a030] cursor-pointer">
+                </div>
+
+                <button type="submit" class="w-full gold-gradient text-black font-semibold py-4 rounded-xl shadow-lg text-lg hover:opacity-90 transition">
+                    Randevu Talebini Gönder
+                </button>
+            </form>
+            <div id="bookingSuccess" class="hidden mt-6 bg-[#D4AF37]/10 border border-[#D4AF37] text-[#D4AF37] p-4 rounded-xl text-center font-medium">
+                <i class="fa-solid fa-circle-check mr-2"></i> Randevu talebiniz başarıyla alındı!
+            </div>
+        </div>
+    </section>
+
+    <!-- KONUM VE İLETİŞİM -->
+    <section id="konum" class="py-24 px-4 bg-[#0F0F0F] border-t border-gray-800">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="gold-text text-sm tracking-widest uppercase">Ziyaret Edin</span>
+                <h2 class="text-3xl font-bold font-serif-title gold-text mt-2 mb-6">Atölye Konumu</h2>
+                <div class="space-y-4 text-gray-300">
+                    <p class="flex items-start gap-3">
+                        <i class="fa-solid fa-location-dot gold-text text-xl mt-1"></i>
+                        <span>Selami Ali Mh. İspir Sk. No: 4/A NES KUAFOR SALONU Üsküdar / İstanbul</span>
+                    </p>
+                    <p class="flex items-center gap-3">
+                        <i class="fa-solid fa-phone gold-text text-xl"></i>
+                        <span>+90 (216) 555 01 99</span>
+                    </p>
+                    <p class="flex items-center gap-3">
+                        <i class="fa-solid fa-clock gold-text text-xl"></i>
+                        <span>Pazartesi - Cumartesi: 09:00 - 20:00</span>
+                    </p>
+                </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden h-80 border border-[#D4AF37]/30 shadow-2xl">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.51134215162!2d29.0278143!3d41.025751!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab85743c3d52d%3A0x6b4cf8828f0951a7!2zU2VsYW1pIEFsaSwgxLBzcGlyIFNrLiBOczo0L0EsIDM0MzQxIMOaesG8w7xiYXIvxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1680000000000!5m2!1str!2str" class="w-full h-full border-0 map-iframe" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 px-4 text-center border-t border-gray-900 text-gray-500 text-sm">
+        <p>&copy; 2026 NES KUAFOR SALONU. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <!-- MÜŞTERİ RANDEVULARIM MODALI -->
+    <div id="myAppModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-[#121212] border border-[#D4AF37]/50 rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+            <button onclick="closeMyAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
+            <h3 class="text-2xl font-serif font-bold text-[#F3E5AB] mb-6">Randevularım & Yanıtlar</h3>
+            <div id="myAppListContainer" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL MODALI -->
+    <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-[#121212] border border-[#D4AF37]/40 rounded-3xl max-w-4xl w-full p-6 md:p-8 max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+                <h3 class="text-2xl font-bold font-serif-title gold-text flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield"></i> NES Yönetim Paneli
+                </h3>
+                <button onclick="closeAdminModal()" class="text-gray-400 hover:text-white text-3xl">&times;</button>
+            </div>
+
+            <!-- Şifre Ekranı -->
+            <div id="adminAuthScreen" class="py-12 text-center max-w-sm mx-auto">
+                <i class="fa-solid fa-lock text-5xl gold-text mb-4"></i>
+                <h4 class="text-xl font-semibold mb-2 text-white">Yönetici Girişi</h4>
+                <p class="text-xs text-gray-400 mb-6">Lütfen şifrenizi giriniz (Varsayılan: 1234)</p>
+                <input type="password" id="adminPassInput" placeholder="Şifre" class="w-full bg-[#0A0A0A] border border-gray-800 text-center text-white px-4 py-3 rounded-xl mb-4 focus:border-[#D4AF37] focus:outline-none">
+                <button onclick="verifyAdmin()" class="w-full gold-gradient text-black font-semibold py-3 rounded-xl">Giriş Yap</button>
+                <p id="adminErr" class="text-red-400 text-xs mt-3 hidden">Hatalı şifre!</p>
+            </div>
+
+            <!-- Admin İçerik -->
+            <div id="adminPanelContent" class="hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="font-semibold text-lg text-gray-200">Gelen Randevu Talepleri & Mesajlar</h4>
+                    <button onclick="clearAllApp()" class="text-xs bg-red-900/40 text-red-400 border border-red-800 px-3 py-1.5 rounded-lg">Tümünü Temizle</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-800 text-[#D4AF37]">
+                                <th class="p-3">Müşteri</th>
+                                <th class="p-3">Hizmet & Detay</th>
+                                <th class="p-3">Tarih / Saat</th>
+                                <th class="p-3">Durum</th>
+                                <th class="p-3">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody" class="divide-y divide-gray-800"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GÖRSEL & YANIT MODALI (LIGHTBOX) -->
+    <div id="lightboxModal" class="fixed inset-0 bg-black/90 z-[70] hidden flex items-center justify-center p-4">
+        <div class="bg-[#121212] border border-[#D4AF37]/50 rounded-2xl max-w-2xl w-full p-6 relative flex flex-col md:flex-row gap-6 items-center">
+            <button onclick="closeLightbox()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
+            <div id="lightboxMediaContainer" class="w-full md:w-1/2"></div>
+            <div class="w-full md:w-1/2 space-y-4">
+                <h4 class="gold-text font-serif-title font-bold text-xl">Müşteri Mesajı</h4>
+                <p id="lightboxNoteText" class="text-gray-300 text-sm bg-[#0A0A0A] p-4 rounded-xl border border-gray-800"></p>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-2">Müşteriye Yanıt Gönder</label>
+                    <textarea id="adminReplyText" rows="2" placeholder="Yanıtınızı buraya yazın..." class="w-full bg-[#0A0A0A] border border-gray-800 text-white text-sm p-3 rounded-xl focus:border-[#D4AF37] focus:outline-none mb-2"></textarea>
+                    <button onclick="sendAdminReply()" class="w-full gold-gradient text-black text-sm font-semibold py-2.5 rounded-xl">Yanıtı Gönder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GİRİŞ / ÜYE OL MODALI -->
+    <div id="authModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-[#121212] border border-[#D4AF37]/40 rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl relative">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
+            <h3 id="authModalTitle" class="text-2xl font-bold font-serif-title gold-text mb-4 text-center">Giriş Yap</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-gray-400 uppercase mb-1">Ad Soyad</label>
+                    <input type="text" id="authName" placeholder="Adınız Soyadınız" class="w-full bg-[#0A0A0A] border border-gray-800 text-white px-4 py-2.5 rounded-xl focus:border-[#D4AF37] focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 uppercase mb-1">Şifre (En az 6 karakter & 1 Büyük Harf)</label>
+                    <input type="password" id="authPass" placeholder="Şifreniz" class="w-full bg-[#0A0A0A] border border-gray-800 text-white px-4 py-2.5 rounded-xl focus:border-[#D4AF37] focus:outline-none">
+                </div>
+                <button onclick="handleAuthSubmit()" id="authSubmitBtn" class="w-full gold-gradient text-black font-semibold py-3 rounded-xl">Giriş Yap</button>
+                <p id="authErrorMsg" class="text-red-400 text-xs text-center hidden"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        document.getElementById('bDate').min = new Date().toISOString().split('T')[0];
+
+        let currentAuthMode = 'login'; // 'login' or 'register'
+
+        function getApps() {
+            return JSON.parse(localStorage.getItem('nes_apps')) || [
+                { id: 1, name: 'Ayşe Yılmaz', phone: '05551112233', service: 'Kesim & Şekillendirme', date: new Date(Date.now() + 86400000).toISOString().split('T')[0], time: '14:00', note: 'Önler hafif katlı olsun lütfen.', image: '', status: 'Onaylandı', reply: 'Bekliyoruz Ayşe hanım.' }
+            ];
+        }
+
+        function saveApps(apps) {
+            localStorage.setItem('nes_apps', JSON.stringify(apps));
+            checkReminders();
+        }
+
+        function getRegisteredUsers() {
+            return JSON.parse(localStorage.getItem('nes_reg_users')) || [];
+        }
+
+        function getCurrentUser() {
+            return JSON.parse(localStorage.getItem('nes_active_user')) || null;
+        }
+
+        function updateAuthUI() {
+            const user = getCurrentUser();
+            const badge = document.getElementById('loggedInUserBadge');
+            const authBtns = document.getElementById('authButtonsContainer');
+            const span = document.getElementById('userNameSpan');
+            const lockOverlay = document.getElementById('bookingLockOverlay');
+            const myAppsNav = document.getElementById('myAppsNavLink');
+            const nameInput = document.getElementById('bName');
+
+            if (user) {
+                badge.classList.remove('hidden');
+                badge.classList.add('flex');
+                authBtns.classList.add('hidden');
+                span.innerText = user.name;
+                lockOverlay.classList.add('hidden');
+                myAppsNav.classList.remove('hidden');
+                nameInput.value = user.name;
+            } else {
+                badge.classList.add('hidden');
+                badge.classList.remove('flex');
+                authBtns.classList.remove('hidden');
+                lockOverlay.classList.remove('hidden');
+                myAppsNav.classList.add('hidden');
+                nameInput.value = '';
+            }
+            checkReminders();
+        }
+
+        // Otomatik Hatırlatıcı Kontrolü
+        function checkReminders() {
+            const user = getCurrentUser();
+            const banner = document.getElementById('reminderBanner');
+            const textDiv = document.getElementById('reminderText');
+            const nav = document.getElementById('mainNav');
+
+            if (!user) {
+                banner.classList.add('hidden');
+                nav.style.top = '0px';
+                return;
+            }
+
+            const apps = getApps();
+            const myApps = apps.filter(a => a.name.toLowerCase() === user.name.toLowerCase() && a.status === 'Onaylandı');
+            const todayStr = new Date().toISOString().split('T')[0];
+            const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+            let remText = '';
+            myApps.forEach(app => {
+                if (app.date === todayStr) {
+                    remText = `Hatırlatma: Bugün saat ${app.time}'de "${app.service}" randevunuz var. Lütfen salonumuzda olun, iyi günler dileriz!`;
+                } else if (app.date === tomorrowStr) {
+                    remText = `Hatırlatma: Yarın saat ${app.time}'de "${app.service}" randevunuz var. Sabırsızlıkla bekliyoruz!`;
+                }
+            });
+
+            if (remText) {
+                textDiv.innerText = remText;
+                banner.classList.remove('hidden');
+                nav.style.top = '48px';
+            } else {
+                banner.classList.add('hidden');
+                nav.style.top = '0px';
+            }
+        }
+
+        function openAuthModal(mode) {
+            currentAuthMode = mode;
+            const title = document.getElementById('authModalTitle');
+            const btn = document.getElementById('authSubmitBtn');
+            const err = document.getElementById('authErrorMsg');
+            err.classList.add('hidden');
+
+            if (mode === 'login') {
+                title.innerText = 'Giriş Yap';
+                btn.innerText = 'Giriş Yap';
+            } else {
+                title.innerText = 'Üye Ol';
+                btn.innerText = 'Kayıt Ol';
+            }
+            document.getElementById('authModal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function handleAuthSubmit() {
+            const name = document.getElementById('authName').value.trim();
+            const pass = document.getElementById('authPass').value;
+            const err = document.getElementById('authErrorMsg');
+
+            if (!name || pass.length < 6 || !/[A-Z]/.test(pass)) {
+                err.innerText = "Şifre en az 6 karakter olmalı ve en az 1 büyük harf içermelidir!";
+                err.classList.remove('hidden');
+                return;
+            }
+
+            let users = getRegisteredUsers();
+
+            if (currentAuthMode === 'register') {
+                const existing = users.find(u => u.name.toLowerCase() === name.toLowerCase());
+                if (existing) {
+                    err.innerText = "Bu isimde kayıtlı bir hesap var. Lütfen giriş yapın.";
+                    err.classList.remove('hidden');
+                    return;
+                }
+                const newUser = { name: name, password: pass };
+                users.push(newUser);
+                localStorage.setItem('nes_reg_users', JSON.stringify(users));
+                localStorage.setItem('nes_active_user', JSON.stringify(newUser));
+                alert('Üyeliğiniz başarıyla oluşturuldu ve giriş yapıldı!');
+            } else {
+                const found = users.find(u => u.name.toLowerCase() === name.toLowerCase());
+                if (!found) {
+                    err.innerText = "Böyle bir üyelik bulunamadı. Lütfen önce Üye Olun.";
+                    err.classList.remove('hidden');
+                    return;
+                }
+                if (found.password !== pass) {
+                    err.innerText = "Hatalı şifre!";
+                    err.classList.remove('hidden');
+                    return;
+                }
+                localStorage.setItem('nes_active_user', JSON.stringify(found));
+                alert('Giriş başarılı!');
+            }
+
+            closeAuthModal();
+            updateAuthUI();
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('nes_active_user');
+            updateAuthUI();
+        }
+
+        function selectServiceTab(srvName) {
+            const user = getCurrentUser();
+            if (!user) {
+                alert('İşlem yapmak için lütfen önce giriş yapın.');
+                openAuthModal('login');
+                return;
+            }
+            document.getElementById('bService').value = srvName;
+            window.location.hash = '#randevu';
+        }
+
+        function openGalleryItem(title, tag) {
+            const user = getCurrentUser();
+            if (!user) {
+                alert('Stil seçip randevu almak için önce giriş yapmalısınız.');
+                openAuthModal('login');
+                return;
+            }
+            document.getElementById('bNote').value = `${title} (${tag}) modelini istiyorum.`;
+            window.location.hash = '#randevu';
+        }
+
+        function handleBooking(e) {
+            e.preventDefault();
+            const user = getCurrentUser();
+            if (!user) {
+                alert('Lütfen önce giriş yapın.');
+                openAuthModal('login');
+                return;
+            }
+
+            const fileInput = document.getElementById('bFile');
+
+            const saveRecord = (img64) => {
+                const apps = getApps();
+                apps.push({
+                    id: Date.now(),
+                    name: user.name,
+                    phone: document.getElementById('bPhone').value,
+                    service: document.getElementById('bService').value,
+                    date: document.getElementById('bDate').value,
+                    time: document.getElementById('bTime').value,
+                    note: document.getElementById('bNote').value,
+                    image: img64,
+                    status: 'Beklemede',
+                    reply: ''
+                });
+                saveApps(apps);
+                e.target.reset();
+                document.getElementById('bName').value = user.name;
+                const msg = document.getElementById('bookingSuccess');
+                msg.classList.remove('hidden');
+                setTimeout(() => msg.classList.add('hidden'), 4000);
+            };
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(uploadEvent) {
+                    saveRecord(uploadEvent.target.result);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                saveRecord('');
+            }
+        }
+
+        // Müşteri Randevularım Modal
+        function openMyAppModal() {
+            const user = getCurrentUser();
+            if (!user) return;
+            const apps = getApps();
+            const myApps = apps.filter(a => a.name.toLowerCase() === user.name.toLowerCase());
+            const container = document.getElementById('myAppListContainer');
+            container.innerHTML = '';
+
+            if (myApps.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-400 py-8 text-sm">Henüz randevunuz bulunmuyor.</p>';
+            } else {
+                myApps.forEach(app => {
+                    container.innerHTML += `
+                        <div class="p-4 rounded-2xl bg-[#18181B] border border-[#D4AF37]/30 space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="font-serif font-bold text-[#F3E5AB] text-sm">${app.service}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${app.status==='Onaylandı'?'bg-emerald-500/20 text-emerald-300':'bg-amber-500/20 text-amber-300'}">${app.status}</span>
+                            </div>
+                            <p class="text-xs text-gray-300"><i class="fa-solid fa-clock text-[#D4AF37]"></i> ${app.date} - ${app.time}</p>
+                            ${app.note ? `<p class="text-xs text-gray-400 italic">Notunuz: "${app.note}"</p>` : ''}
+                            ${app.reply ? `<div class="p-2.5 rounded-xl bg-[#D4AF37]/10 border-l-2 border-[#D4AF37] text-xs text-gray-200"><b class="text-[#D4AF37]">NES KUAFOR SALONU Yanıtı:</b> "${app.reply}"</div>` : ''}
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('myAppModal').classList.remove('hidden');
+        }
+        function closeMyAppModal() { document.getElementById('myAppModal').classList.add('hidden'); }
+
+        // Admin
+        function openAdminModal() { document.getElementById('adminModal').classList.remove('hidden'); }
+        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
+
+        function verifyAdmin() {
+            const val = document.getElementById('adminPassInput').value;
+            if(val === '1234') {
+                document.getElementById('adminAuthScreen').classList.add('hidden');
+                document.getElementById('adminPanelContent').classList.remove('hidden');
+                renderAdminTable();
+            } else {
+                document.getElementById('adminErr').classList.remove('hidden');
+            }
+        }
+
+        function renderAdminTable() {
+            const apps = getApps();
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+            if(apps.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center p-6 text-gray-500">Henüz randevu yok.</td></tr>';
+                return;
+            }
+            apps.forEach(app => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-900/50";
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-white">${app.name}<br><span class="text-xs text-gray-400">${app.phone}</span></td>
+                    <td class="p-3">
+                        <span class="gold-text">${app.service}</span><br>
+                        <span class="text-xs text-gray-400">${app.note || 'Not yok'}</span>
+                        ${app.image ? `<br><button onclick="openLightboxImage('${app.image}', '${app.note}', ${app.id})" class="text-xs text-[#D4AF37] underline mt-1 inline-block"><i class="fa-solid fa-image"></i> Görseli Gör</button>` : ''}
+                    </td>
+                    <td class="p-3 text-gray-300">${app.date} <br><b>${app.time}</b></td>
+                    <td class="p-3"><span class="px-2.5 py-1 rounded-full text-xs font-medium ${app.status==='Onaylandı'?'bg-emerald-900/50 text-emerald-400 border border-emerald-800':'bg-amber-900/50 text-amber-400 border border-amber-800'}">${app.status}</span></td>
+                    <td class="p-3 space-x-2">
+                        <button onclick="updateStatus(${app.id}, 'Onaylandı')" class="text-emerald-400 hover:text-emerald-300" title="Onayla"><i class="fa-solid fa-check"></i></button>
+                        <button onclick="updateStatus(${app.id}, 'İptal')" class="text-red-400 hover:text-red-300" title="İptal Et"><i class="fa-solid fa-ban"></i></button>
+                        <button onclick="openLightboxImage('${app.image || ''}', '${app.note || 'Not yok'}', ${app.id})" class="text-blue-400 hover:text-blue-300" title="Mesaj & Yanıt"><i class="fa-solid fa-message"></i></button>
+                        <button onclick="deleteApp(${app.id})" class="text-gray-500 hover:text-red-400" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        let activeLightboxId = null;
+        function openLightboxImage(imgSrc, noteText, appId) {
+            activeLightboxId = appId;
+            const container = document.getElementById('lightboxMediaContainer');
+            if(imgSrc) {
+                container.innerHTML = `<img src="${imgSrc}" class="w-full h-auto rounded-xl border border-gray-800">`;
+            } else {
+                container.innerHTML = `<div class="text-gray-500 text-sm italic p-8 text-center bg-[#0A0A0A] rounded-xl">Fotoğraf yüklenmemiş</div>`;
+            }
+            document.getElementById('lightboxNoteText').innerText = noteText;
+            document.getElementById('adminReplyText').value = '';
+            document.getElementById('lightboxModal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+        }
+
+        function sendAdminReply() {
+            const replyVal = document.getElementById('adminReplyText').value;
+            if(!replyVal) return alert('Lütfen yanıt yazın.');
+            const apps = getApps();
+            const target = apps.find(a => a.id === activeLightboxId);
+            if(target) {
+                target.reply = replyVal;
+                saveApps(apps);
+                alert('Yanıt başarıyla müşteriye iletildi!');
+                closeLightbox();
+                renderAdminTable();
+            }
+        }
+
+        function updateStatus(id, st) {
+            const apps = getApps();
+            const target = apps.find(a => a.id === id);
+            if(target) { target.status = st; saveApps(apps); renderAdminTable(); }
+        }
+
+        function deleteApp(id) {
+            let apps = getApps();
+            apps = apps.filter(a => a.id !== id);
+            saveApps(apps);
+            renderAdminTable();
+        }
+
+        function clearAllApp() {
+            if(confirm('Tüm kayıtlar silinsin mi?')) {
+                localStorage.removeItem('nes_apps');
+                renderAdminTable();
+            }
+        }
+
+        updateAuthUI();
+    </script>
+</body>
+</html>
