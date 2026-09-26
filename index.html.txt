@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NES Luxury Hair Atelier - Üsküdar</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #0A0A0A; color: #E5E7EB; }
+        .font-serif-title { font-family: 'Playfair Display', serif; }
+        .gold-text { color: #D4AF37; }
+        .gold-border { border-color: #D4AF37; }
+        .gold-bg { background-color: #D4AF37; }
+        .gold-gradient { background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%); }
+    </style>
+</head>
+<body class="bg-[#0A0A0A] text-gray-200 selection:bg-[#D4AF37] selection:text-black">
+
+    <!-- OTOMATİK HATIRLATICI BİLDİRİM BANDI -->
+    <div id="reminderBanner" class="hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#D4AF37] via-[#C5A880] to-[#D4AF37] text-black px-4 py-3 shadow-lg flex items-center justify-between">
+        <div class="max-w-7xl mx-auto flex items-center gap-3 text-xs sm:text-sm font-semibold tracking-wide">
+            <i class="fa-solid fa-bell text-black animate-bounce"></i>
+            <div id="reminderText"></div>
+        </div>
+    </div>
+
+    <!-- NAVİGASYON -->
+    <nav class="fixed w-full bg-[#0A0A0A]/90 backdrop-blur-md border-b border-[#D4AF37]/20 z-40 transition-all" id="mainNav" style="top: 0px;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center shadow-lg shadow-[#D4AF37]/20 text-black font-bold">
+                    <i class="fa-solid fa-scissors"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-serif font-bold tracking-wider text-[#F3E5AB] block">NES</span>
+                    <span class="text-[9px] uppercase tracking-[0.25em] text-[#C5A880] block">Luxury Hair Atelier</span>
+                </div>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
+                <a href="#" class="hover:text-[#D4AF37] text-[#D4AF37]">Ana Sayfa</a>
+                <a href="#hizmetler" class="hover:text-[#D4AF37] text-gray-300">Hizmetler & Fiyatlar</a>
+                <a href="#galeri" class="hover:text-[#D4AF37] text-gray-300">Galeri</a>
+                <a href="#randevu" class="hover:text-[#D4AF37] text-gray-300">Randevu Al</a>
+                <a href="#konum" class="hover:text-[#D4AF37] text-gray-300">Konum & İletişim</a>
+                <span id="navMyAppsLink" class="hidden hover:text-[#D4AF37] text-gray-300 cursor-pointer" onclick="openMyAppModal()">Randevularım</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div id="userBadge" class="hidden items-center gap-2 bg-[#18181B] border border-[#D4AF37]/30 px-3 py-1.5 rounded-full">
+                    <span id="userNameDisplay" class="text-xs text-[#F3E5AB] font-medium"></span>
+                    <button onclick="handleLogout()" class="text-gray-400 hover:text-red-400" title="Çıkış"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+                <button id="authBtn" onclick="openAuthModal()" class="px-4 py-2 rounded-full border border-[#D4AF37]/40 text-[#D4AF37] hover:bg-[#D4AF37]/10 text-xs font-semibold uppercase tracking-wider transition">
+                    <i class="fa-solid fa-right-to-bracket mr-1"></i> Giriş / Üye Ol
+                </button>
+                <button onclick="openAdminModal()" class="p-2.5 rounded-full bg-[#18181B] border border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/20 transition" title="Admin Paneli">
+                    <i class="fa-solid fa-lock text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ANA İÇERİK (Sıralı Akış) -->
+    <main class="pt-20">
+        <!-- 1. HERO BÖLÜMÜ -->
+        <section class="relative min-h-[90vh] flex items-center justify-center px-4 overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center brightness-[0.35] scale-105" style="background-image: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80')"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/60"></div>
+            
+            <div class="relative z-10 max-w-4xl mx-auto text-center space-y-8 py-20">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#F3E5AB] text-xs uppercase tracking-[0.3em]">
+                    <i class="fa-solid fa-sparkles text-[#D4AF37]"></i> Üsküdar'ın En Seçkin Saç Atölyesi
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold text-[#F3E5AB] leading-tight tracking-wide">
+                    Zarafet ve Sanatın <br>
+                    <span class="bg-gradient-to-r from-[#F3E5AB] via-[#D4AF37] to-[#C5A880] bg-clip-text text-transparent">Kusursuz Buluşması</span>
+                </h1>
+                
+                <p class="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                    Kişiye özel renk tasarımı, birinci sınıf keratin bakımları ve ödüllü saç kesim uzmanlarımızla kendinizi yeniden keşfedin.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <a href="#randevu" class="w-full sm:w-auto px-8 py-4 rounded-full gold-gradient text-black font-bold text-sm uppercase tracking-widest hover:opacity-90 shadow-xl shadow-[#D4AF37]/20 transition text-center">
+                        Hemen Randevu Al
+                    </a>
+                    <a href="#hizmetler" class="w-full sm:w-auto px-8 py-4 rounded-full border border-[#D4AF37]/40 text-[#F3E5AB] hover:bg-[#D4AF37]/10 font-semibold text-sm uppercase tracking-widest transition text-center">
+                        Fiyat Listesini İncele
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEDEN BİZ -->
+        <section class="py-24 bg-[#121212] border-t border-b border-[#D4AF37]/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-10">
+                <div class="p-8 rounded-3xl bg-[#18181B] border border-[#D4AF37]/20 hover:border-[#D4AF37] transition">
+                    <div class="w-12 h-12 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] mb-6 text-xl">
+                        <i class="fa-solid fa-scissors"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-[#F3E5AB] mb-3">Master Stylist Kadrosu</h3>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed">Üsküdar ve İstanbul'un önde gelen akademilerinde eğitilmiş, trendleri belirleyen profesyonel ekip.</p>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-[#18181B] border border-[#D4AF37]/20 hover:border-[#D4AF37] transition">
+                    <div class="w-12 h-12 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] mb-6 text-xl">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-[#F3E5AB] mb-3">Organik & Lüks Ürünler</h3>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed">Saç telinize zarar vermeyen, tamamen organik içerikli, dünya markası boya ve bakım kürleri.</p>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-[#18181B] border border-[#D4AF37]/20 hover:border-[#D4AF37] transition">
+                    <div class="w-12 h-12 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] mb-6 text-xl">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-[#F3E5AB] mb-3">Kişiye Özel Konsept</h3>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed">Size özel ayrılmış VIP odalarımızda, tamamen size odaklanan butik bir kuaförlük deneyimi.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. HİZMETLER & FİYATLAR -->
+        <section id="hizmetler" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                <span class="text-xs uppercase tracking-[0.3em] text-[#D4AF37] block">Şeffaf Fiyatlandırma</span>
+                <h2 class="text-3xl sm:text-5xl font-serif font-bold text-[#F3E5AB]">Hizmetlerimiz & Fiyat Listesi</h2>
+                <div class="w-20 h-0.5 bg-[#D4AF37] mx-auto"></div>
+                <p class="text-gray-400 text-sm font-light">Her işlem öncesi saç analizi ve ücretsiz konsültasyon dahildir.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="p-8 rounded-3xl bg-[#121212] border border-[#D4AF37]/30 hover:border-[#D4AF37] transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 rounded-2xl bg-[#D4AF37]/10 text-[#D4AF37] text-xl">
+                                <i class="fa-solid fa-scissors"></i>
+                            </div>
+                            <span class="text-xl font-serif font-bold text-[#F3E5AB]">450 ₺ - 850 ₺</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Kesim & Şekillendirme</h3>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Yüz tipinize uygun modern kesim, yıkama ve profesyonel fön.</p>
+                    </div>
+                    <a href="#randevu" onclick="selectService('Kesim & Şekillendirme')" class="w-full py-3 text-center rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</a>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-[#121212] border border-[#D4AF37]/30 hover:border-[#D4AF37] transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 rounded-2xl bg-[#D4AF37]/10 text-[#D4AF37] text-xl">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <span class="text-xl font-serif font-bold text-[#F3E5AB]">2.200 ₺ - 4.500 ₺</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Ombre / Balyaj & Renklendirme</h3>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Doğal ton geçişleri, koruyucu olaplex bakımı ve özel cila uygulaması.</p>
+                    </div>
+                    <a href="#randevu" onclick="selectService('Ombre / Balyaj')" class="w-full py-3 text-center rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</a>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-[#121212] border border-[#D4AF37]/30 hover:border-[#D4AF37] transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 rounded-2xl bg-[#D4AF37]/10 text-[#D4AF37] text-xl">
+                                <i class="fa-solid fa-shield"></i>
+                            </div>
+                            <span class="text-xl font-serif font-bold text-[#F3E5AB]">1.100 ₺ - 2.000 ₺</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Keratin & Botoks Bakımı</h3>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Yıpranmış saç tellerini onaran derinlemesine keratin yüklemesi.</p>
+                    </div>
+                    <a href="#randevu" onclick="selectService('Keratin Bakımı')" class="w-full py-3 text-center rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</a>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-[#121212] border border-[#D4AF37]/30 hover:border-[#D4AF37] transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 rounded-2xl bg-[#D4AF37]/10 text-[#D4AF37] text-xl">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <span class="text-xl font-serif font-bold text-[#F3E5AB]">850 ₺ - 1.600 ₺</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Dip / Tüm Saç Boyası</h3>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Amonyaksız, saç derisini koruyan organik boya seçenekleri.</p>
+                    </div>
+                    <a href="#randevu" onclick="selectService('Dip / Tüm Boya')" class="w-full py-3 text-center rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</a>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-[#121212] border border-[#D4AF37]/30 hover:border-[#D4AF37] transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 rounded-2xl bg-[#D4AF37]/10 text-[#D4AF37] text-xl">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <span class="text-xl font-serif font-bold text-[#F3E5AB]">4.500 ₺+</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Gelin Paketi & Özel Gün</h3>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Prova dahil gelin saçı, porselen makyaj ve VIP hazırlık odası.</p>
+                    </div>
+                    <a href="#randevu" onclick="selectService('Gelin Paketi')" class="w-full py-3 text-center rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</a>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-[#121212] border border-[#D4AF37]/30 hover:border-[#D4AF37] transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 rounded-2xl bg-[#D4AF37]/10 text-[#D4AF37] text-xl">
+                                <i class="fa-solid fa-hand-sparkles"></i>
+                            </div>
+                            <span class="text-xl font-serif font-bold text-[#F3E5AB]">500 ₺ - 950 ₺</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Manikür & Pedikür SPA</h3>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Steril ekipmanlarla spa hijyeninde el/ayak bakımı ve kalıcı oje.</p>
+                    </div>
+                    <a href="#randevu" onclick="selectService('Manikür & Pedikür')" class="w-full py-3 text-center rounded-xl bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB] hover:bg-[#D4AF37] hover:text-black font-semibold text-xs uppercase tracking-wider transition">Bu Hizmeti Seç</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. GALERİ -->
+        <section id="galeri" class="py-24 bg-[#121212] border-t border-[#D4AF37]/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                    <span class="text-xs uppercase tracking-[0.3em] text-[#D4AF37] block">Portfolyo</span>
+                    <h2 class="text-3xl sm:text-5xl font-serif font-bold text-[#F3E5AB]">Sanatsal Çalışmalarımız</h2>
+                    <div class="w-20 h-0.5 bg-[#D4AF37] mx-auto"></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="group relative h-80 rounded-3xl overflow-hidden cursor-pointer border border-[#D4AF37]/20 shadow-xl" onclick="openGalleryItem('Karamel Ombre Geçişi', 'Renklendirme', 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=800&q=80')">
+                        <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=800&q=80" alt="Ombre" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-95 transition"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <span class="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-bold block mb-1">Renklendirme</span>
+                            <h3 class="text-xl font-serif font-bold text-[#F3E5AB]">Karamel Ombre Geçişi</h3>
+                        </div>
+                    </div>
+
+                    <div class="group relative h-80 rounded-3xl overflow-hidden cursor-pointer border border-[#D4AF37]/20 shadow-xl" onclick="openGalleryItem('Modern Bob Kesim', 'Kesim', 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=80')">
+                        <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=80" alt="Kesim" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-95 transition"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <span class="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-bold block mb-1">Kesim</span>
+                            <h3 class="text-xl font-serif font-bold text-[#F3E5AB]">Modern Bob Kesim</h3>
+                        </div>
+                    </div>
+
+                    <div class="group relative h-80 rounded-3xl overflow-hidden cursor-pointer border border-[#D4AF37]/20 shadow-xl" onclick="openGalleryItem('Gelin Başı Tasarımı', 'Özel Gün', 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80')">
+                        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80" alt="Gelin Başı" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-95 transition"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <span class="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-bold block mb-1">Özel Gün</span>
+                            <h3 class="text-xl font-serif font-bold text-[#F3E5AB]">Gelin Başı Tasarımı</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. RANDEVU FORMU -->
+        <section id="randevu" class="py-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+            <div class="p-8 sm:p-12 rounded-3xl bg-[#121212] border border-[#D4AF37]/40 shadow-2xl relative">
+                
+                <div class="text-center mb-10 space-y-3">
+                    <span class="text-xs uppercase tracking-[0.3em] text-[#D4AF37] block">VIP Rezervasyon</span>
+                    <h2 class="text-3xl font-serif font-bold text-[#F3E5AB]">Online Randevu Alın</h2>
+                    <div class="w-16 h-0.5 bg-[#D4AF37] mx-auto"></div>
+                    <p class="text-gray-400 text-xs font-light">Talebiniz alındıktan sonra ekibimiz onay için sizinle iletişime geçecektir.</p>
+                </div>
+
+                <div id="bookingSuccessBox" class="hidden mb-8 p-4 rounded-2xl bg-[#D4AF37]/20 border border-[#D4AF37] text-[#F3E5AB] text-center text-sm font-medium flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-check text-[#D4AF37]"></i> Randevu talebiniz başarıyla oluşturuldu!
+                </div>
+
+                <form onsubmit="handleBookingSubmit(event)" class="space-y-6">
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-[#D4AF37] mb-2 font-medium">Adınız Soyadınız *</label>
+                            <input type="text" id="bookName" required placeholder="Örn: Leyla Yılmaz" class="w-full bg-[#18181B] border border-white/10 rounded-xl px-4 py-3 text-sm text-gray-100 focus:outline-none focus:border-[#D4AF37]">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-[#D4AF37] mb-2 font-medium">Telefon Numaranız *</label>
+                            <input type="tel" id="bookPhone" required placeholder="05XX XXX XX XX" class="w-full bg-[#18181B] border border-white/10 rounded-xl px-4 py-3 text-sm text-gray-100 focus:outline-none focus:border-[#D4AF37]">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-[#D4AF37] mb-2 font-medium">Hizmet Seçimi *</label>
+                        <select id="bookService" required class="w-full bg-[#18181B] border border-white/10 rounded-xl px-4 py-3 text-sm text-gray-100 focus:outline-none focus:border-[#D4AF37]">
+                            <option value="">Lütfen Bir Hizmet Seçin</option>
+                            <option value="Kesim & Şekillendirme">Kesim & Şekillendirme (450 ₺)</option>
+                            <option value="Ombre / Balyaj">Ombre / Balyaj (2.200 ₺)</option>
+                            <option value="Keratin Bakımı">Keratin Bakımı (1.100 ₺)</option>
+                            <option value="Dip / Tüm Boya">Dip / Tüm Boya (850 ₺)</option>
+                            <option value="Gelin Paketi">Gelin Paketi (4.500 ₺)</option>
+                            <option value="Manikür & Pedikür">Manikür & Pedikür (500 ₺)</option>
+                        </select>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-[#D4AF37] mb-2 font-medium">Tarih *</label>
+                            <input type="date" id="bookDate" required onclick="this.showPicker && this.showPicker()" class="w-full bg-[#18181B] border border-white/10 rounded-xl px-4 py-3 text-sm text-gray-100 focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-[#D4AF37] mb-2 font-medium">Saat Dilimi *</label>
+                            <select id="bookTime" required class="w-full bg-[#18181B] border border-white/10 rounded-xl px-4 py-3 text-sm text-gray-100 focus:outline-none focus:border-[#D4AF37]">
+                                <option value="">Saat Seçiniz</option>
+                                <option value="10:00">10:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="18:00">18:00</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-[#D4AF37] mb-2 font-medium">Özel Notunuz / Mesajınız (Opsiyonel)</label>
+                            <textarea id="bookMsg" rows="3" placeholder="Örn: Saçımın daha önce açılmış uçları var, bu modelden istiyorum..." class="w-full bg-[#18181B] border border-white/10 rounded-xl px-4 py-3 text-sm text-gray-100 focus:outline-none focus:border-[#D4AF37] resize-none"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-[#D4AF37] mb-2 font-medium">Referans Görsel Yükle (Opsiyonel)</label>
+                            <input type="file" id="bookFile" accept="image/*" class="w-full text-xs text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#D4AF37] file:text-black hover:file:opacity-90 cursor-pointer">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 rounded-xl gold-gradient text-black font-bold text-xs uppercase tracking-widest hover:opacity-90 transition shadow-lg shadow-[#D4AF37]/20">
+                        Randevu Talebini Gönder
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 5. KONUM & İLETİŞİM -->
+        <section id="konum" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#121212] rounded-3xl border border-[#D4AF37]/20 my-10">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                <span class="text-xs uppercase tracking-[0.3em] text-[#D4AF37] block">Lokasyon</span>
+                <h2 class="text-3xl sm:text-5xl font-serif font-bold text-[#F3E5AB]">Bize Ulaşın & Konum</h2>
+                <div class="w-20 h-0.5 bg-[#D4AF37] mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div class="p-8 sm:p-10 rounded-3xl bg-[#18181B] border border-[#D4AF37]/30 space-y-6">
+                    <h3 class="text-2xl font-serif font-bold text-[#F3E5AB]">NES Kuaför Üsküdar</h3>
+                    <p class="text-sm text-gray-300 flex items-start gap-3">
+                        <i class="fa-solid fa-location-dot text-[#D4AF37] shrink-0 mt-0.5"></i>
+                        Selami Ali Mh. İspir Sk. No: 4/A Nes Kuaför Üsküdar / İstanbul
+                    </p>
+                    <p class="text-sm text-gray-300 flex items-center gap-3">
+                        <i class="fa-solid fa-phone text-[#D4AF37] shrink-0"></i>
+                        +90 (212) 555 01 99
+                    </p>
+                    <p class="text-sm text-gray-300 flex items-center gap-3">
+                        <i class="fa-solid fa-clock text-[#D4AF37] shrink-0"></i>
+                        Pazartesi - Cumartesi: 09:00 - 20:00
+                    </p>
+                    <div class="pt-2">
+                        <a href="https://maps.app.goo.gl/fVrwzGqusjmgitqS8?g_st=aw" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/40 text-[#F3E5AB] hover:bg-[#D4AF37]/20 text-xs font-bold uppercase tracking-wider transition">
+                            <i class="fa-solid fa-map-location-dot text-[#D4AF37]"></i> Haritada Aç & Yol Tarifi Al
+                        </a>
+                    </div>
+                </div>
+
+                <div class="h-80 rounded-3xl overflow-hidden border border-[#D4AF37]/30 shadow-2xl">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.51134215162!2d29.0278143!3d41.025751!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab85743c3d52d%3A0x6b4cf8828f0951a7!2zU2VsYW1pIEFsaSwgxLBzcGlyIFNrLiBOczo0L0EsIDM0MzQxIMOaesG8w7xiYXIvxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1680000000000!5m2!1str!2str" class="w-full h-full border-0 filter invert contrast-125" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#121212] border-t border-[#D4AF37]/20 py-16 mt-20 text-gray-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-10">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-full gold-gradient flex items-center justify-center text-black font-bold">N</div>
+                    <span class="text-lg font-serif font-bold text-[#F3E5AB]">NES Kuaför Üsküdar</span>
+                </div>
+                <p class="text-xs text-gray-400 font-light leading-relaxed">Üsküdar'ın en prestijli saç tasarım ve güzellik merkezi. Kişiye özel VIP hizmet anlayışı.</p>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-[0.2em] text-[#D4AF37] mb-4">İletişim & Lokasyon</h4>
+                <p class="text-xs text-gray-300 mb-2 flex items-center gap-2"><i class="fa-solid fa-location-dot text-[#D4AF37]"></i> Selami Ali Mh. İspir Sk. No: 4/A Üsküdar</p>
+                <p class="text-xs text-gray-300 flex items-center gap-2"><i class="fa-solid fa-phone text-[#D4AF37]"></i> +90 (212) 555 01 99</p>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-[0.2em] text-[#D4AF37] mb-4">Çalışma Saatleri</h4>
+                <p class="text-xs text-gray-300 mb-1">Pazartesi - Cumartesi: 09:00 - 20:00</p>
+                <p class="text-xs text-gray-300">Pazar: Yalnızca Özel Randevu</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GİRİŞ / ÜYE OL MODALI -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-[#121212] border border-[#D4AF37]/50 rounded-3xl p-8 max-w-md w-full relative shadow-2xl">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-2xl font-serif font-bold text-[#F3E5AB] mb-2" id="authTitle">Üye Ol / Giriş Yap</h3>
+            <p class="text-xs text-gray-400 mb-6">Randevularınızı takip etmek için adınız ve şifrenizle işlem yapın.</p>
+            <div id="authError" class="hidden mb-4 p-3 rounded-xl bg-red-500/20 border border-red-500 text-red-200 text-xs"></div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-[#D4AF37] mb-1.5 font-medium">Adınız Soyadınız</label>
+                    <input type="text" id="authNameInput" placeholder="Örn: Aylin Çelik" class="w-full bg-[#18181B] border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-[#D4AF37] mb-1.5 font-medium">Şifre</label>
+                    <input type="password" id="authPassInput" placeholder="******" class="w-full bg-[#18181B] border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]">
+                    <span class="text-[10px] text-gray-400 mt-1 block">Şifreniz en az 6 karakter olmalı ve en az 1 büyük harf içermelidir.</span>
+                </div>
+                <button onclick="submitAuth()" class="w-full py-3.5 rounded-xl gold-gradient text-black font-bold text-xs uppercase tracking-widest hover:opacity-90 transition">Devam Et</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANELİ MODALI -->
+    <div id="adminModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-[#121212] border border-[#D4AF37]/50 rounded-3xl max-w-5xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 rounded-xl bg-[#D4AF37]/10 text-[#D4AF37]"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3 class="text-2xl font-serif font-bold text-[#F3E5AB]">NES VIP Yönetim Paneli</h3>
+                </div>
+                <button onclick="closeAdminModal()" class="text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div id="adminAuthSection" class="py-12 text-center max-w-sm mx-auto space-y-4">
+                <div class="w-16 h-16 bg-[#D4AF37]/10 text-[#D4AF37] rounded-full flex items-center justify-center mx-auto text-2xl">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h4 class="text-xl font-serif font-bold text-[#F3E5AB]">Yönetici Doğrulama</h4>
+                <p class="text-xs text-gray-400">Lütfen şifrenizi giriniz. (Varsayılan: 1234)</p>
+                <input type="password" id="adminPassField" placeholder="Şifre" class="w-full bg-[#18181B] border border-white/20 rounded-xl px-4 py-3 text-center text-lg text-white focus:outline-none focus:border-[#D4AF37]">
+                <button onclick="verifyAdminLogin()" class="w-full py-3 rounded-xl gold-gradient text-black font-bold text-xs uppercase tracking-widest">Giriş Yap</button>
+                <p id="adminErrText" class="text-red-400 text-xs hidden">Hatalı şifre!</p>
+            </div>
+
+            <div id="adminDashboardSection" class="hidden space-y-6">
+                <div class="flex justify-between items-center">
+                    <div class="flex gap-2">
+                        <button onclick="filterAdmin('ALL')" class="px-4 py-2 rounded-xl text-xs font-semibold uppercase bg-[#D4AF37] text-black" id="btnFilterAll">Tümü</button>
+                        <button onclick="filterAdmin('Beklemede')" class="px-4 py-2 rounded-xl text-xs font-semibold uppercase bg-white/5 text-gray-300" id="btnFilterWait">Beklemede</button>
+                        <button onclick="filterAdmin('Onaylandı')" class="px-4 py-2 rounded-xl text-xs font-semibold uppercase bg-white/5 text-gray-300" id="btnFilterAppr">Onaylandı</button>
+                    </div>
+                    <button onclick="clearAllAppointments()" class="px-4 py-2 rounded-xl bg-red-500/20 text-red-300 text-xs font-semibold hover:bg-red-500/30">Tümünü Temizle</button>
+                </div>
+
+                <div class="overflow-x-auto border border-white/10 rounded-2xl">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-[#18181B] text-[#D4AF37] uppercase tracking-wider">
+                                <th class="p-4">Müşteri</th>
+                                <th class="p-4">Telefon</th>
+                                <th class="p-4">Hizmet</th>
+                                <th class="p-4">Tarih & Saat</th>
+                                <th class="p-4">Mesaj / Görsel</th>
+                                <th class="p-4">Durum</th>
+                                <th class="p-4 text-center">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody" class="divide-y divide-white/5"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MÜŞTERİ RANDEVULARIM MODALI -->
+    <div id="myAppModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-[#121212] border border-[#D4AF37]/50 rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+            <button onclick="closeMyAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-2xl font-serif font-bold text-[#F3E5AB] mb-6">Randevularım & Yanıtlar</h3>
+            <div id="myAppListContainer" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX / GÖRSEL & YANIT MODALI -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="relative max-w-3xl w-full bg-[#121212] border border-[#D4AF37]/50 rounded-3xl overflow-hidden shadow-2xl p-6">
+            <button onclick="closeLightbox()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="grid md:grid-cols-2 gap-6 items-center">
+                <div id="lightboxImgContainer" class="h-64 sm:h-80 rounded-2xl overflow-hidden bg-black/40 flex items-center justify-center"></div>
+                <div class="space-y-4">
+                    <span class="text-xs uppercase tracking-[0.2em] text-[#D4AF37] font-bold block">Müşteri Detayı</span>
+                    <h3 id="lightboxTitle" class="text-xl font-serif font-bold text-[#F3E5AB]"></h3>
+                    <p id="lightboxNote" class="text-xs text-gray-300 italic bg-white/5 p-3 rounded-xl"></p>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-[#D4AF37] font-medium mb-1.5">Müşteriye Yanıt Gönder:</label>
+                        <textarea id="lightboxReplyInput" rows="3" placeholder="Mesajınızı buraya yazın..." class="w-full bg-[#0A0A0A] border border-white/20 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#D4AF37] resize-none mb-2"></textarea>
+                        <button onclick="sendLightboxReply()" class="w-full py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs uppercase tracking-wider hover:bg-blue-500">Yanıtı Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT KODLARI -->
+    <script>
+        document.getElementById('bookDate').min = new Date().toISOString().split('T')[0];
+
+        function getAppData() {
+            try {
+                return JSON.parse(localStorage.getItem('nes_appointments')) || [
+                    { id: 1, name: 'Selin Demir', phone: '05325554433', service: 'Ombre / Balyaj', date: new Date(Date.now() + 86400000).toISOString().split('T')[0], time: '14:00', status: 'Onaylandı', message: 'Uçlarda hafif küllü tonlar istiyorum.', adminReply: 'Talebiniz onaylanmıştır, bekliyoruz.' },
+                    { id: 2, name: 'Zeynep Kaya', phone: '05531112233', service: 'Kesim & Şekillendirme', date: new Date().toISOString().split('T')[0], time: '16:00', status: 'Onaylandı', message: 'Katlı kesim tercih ediyorum.', adminReply: 'Harika bir seçim, bekliyoruz.' }
+                ];
+            } catch(e) { return []; }
+        }
+
+        function saveAppData(arr) {
+            localStorage.setItem('nes_appointments', JSON.stringify(arr));
+            checkReminders();
+        }
+
+        function getCurrentUser() {
+            try { return JSON.parse(localStorage.getItem('nes_user')) || null; } catch(e) { return null; }
+        }
+
+        // Otomatik Hatırlatıcı Kontrolü
+        function checkReminders() {
+            const user = getCurrentUser();
+            const banner = document.getElementById('reminderBanner');
+            const textDiv = document.getElementById('reminderText');
+            if(!user) { banner.classList.add('hidden'); document.getElementById('mainNav').style.top = '0px'; return; }
+
+            const apps = getAppData();
+            const myApps = apps.filter(a => a.name.toLowerCase() === user.name.toLowerCase() && a.status === 'Onaylandı');
+            const todayStr = new Date().toISOString().split('T')[0];
+            const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+            let remHtml = '';
+            myApps.forEach(app => {
+                if(app.date === todayStr) {
+                    remHtml += `<p><b>Hatırlatma:</b> Bugün saat ${app.time}'de "${app.service}" randevunuz var. Lütfen salonumuzda olun!</p>`;
+                } else if(app.date === tomorrowStr) {
+                    remHtml += `<p><b>Hatırlatma:</b> Yarın saat ${app.time}'de "${app.service}" randevunuz var. Bekliyoruz!</p>`;
+                }
+            });
+
+            if(remHtml) {
+                textDiv.innerHTML = remHtml;
+                banner.classList.remove('hidden');
+                document.getElementById('mainNav').style.top = '48px';
+            } else {
+                banner.classList.add('hidden');
+                document.getElementById('mainNav').style.top = '0px';
+            }
+        }
+
+        // Auth İşlemleri
+        function updateNavAuth() {
+            const user = getCurrentUser();
+            const authBtn = document.getElementById('authBtn');
+            const userBadge = document.getElementById('userBadge');
+            const nameDisp = document.getElementById('userNameDisplay');
+            const myAppLk = document.getElementById('navMyAppsLink');
+
+            if(user) {
+                authBtn.classList.add('hidden');
+                userBadge.classList.remove('hidden');
+                userBadge.classList.add('flex');
+                nameDisp.innerText = user.name;
+                myAppLk.classList.remove('hidden');
+            } else {
+                authBtn.classList.remove('hidden');
+                userBadge.classList.add('hidden');
+                userBadge.classList.remove('flex');
+                myAppLk.classList.add('hidden');
+            }
+            checkReminders();
+        }
+
+        function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
+        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+        function submitAuth() {
+            const name = document.getElementById('authNameInput').value.trim();
+            const pass = document.getElementById('authPassInput').value;
+            const errBox = document.getElementById('authError');
+
+            if(!name) { errBox.innerText = "Lütfen adınızı giriniz."; errBox.classList.remove('hidden'); return; }
+            if(pass.length < 6 || !/[A-Z]/.test(pass)) {
+                errBox.innerText = "Şifre en az 6 karakter olmalı ve en az 1 büyük harf içermelidir.";
+                errBox.classList.remove('hidden');
+                return;
+            }
+
+            let users = [];
+            try { users = JSON.parse(localStorage.getItem('nes_reg_users')) || []; } catch(e){}
+
+            let found = users.find(u => u.name.toLowerCase() === name.toLowerCase());
+            if(found) {
+                if(found.password !== pass) {
+                    errBox.innerText = "Hatalı şifre! Lütfen şifrenizi kontrol edin.";
+                    errBox.classList.remove('hidden');
+                    return;
+                }
+            } else {
+                found = { name: name, password: pass };
+                users.push(found);
+                localStorage.setItem('nes_reg_users', JSON.stringify(users));
+            }
+
+            localStorage.setItem('nes_user', JSON.stringify(found));
+            closeAuthModal();
+            updateNavAuth();
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('nes_user');
+            updateNavAuth();
+        }
+
+        // Randevu Oluşturma
+        function selectService(srvName) {
+            document.getElementById('bookService').value = srvName;
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            const user = getCurrentUser();
+            const fileInput = document.getElementById('bookFile');
+
+            const saveAppRecord = (imgBase64) => {
+                const apps = getAppData();
+                const newApp = {
+                    id: Date.now(),
+                    name: user ? user.name : document.getElementById('bookName').value,
+                    phone: document.getElementById('bookPhone').value,
+                    service: document.getElementById('bookService').value,
+                    date: document.getElementById('bookDate').value,
+                    time: document.getElementById('bookTime').value,
+                    status: 'Beklemede',
+                    message: document.getElementById('bookMsg').value,
+                    attachedImage: imgBase64,
+                    adminReply: ''
+                };
+                apps.unshift(newApp);
+                saveAppData(apps);
+
+                document.getElementById('bookingSuccessBox').classList.remove('hidden');
+                e.target.reset();
+                setTimeout(() => document.getElementById('bookingSuccessBox').classList.add('hidden'), 5000);
+            };
+
+            if(fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) { saveAppRecord(e.target.result); };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                saveAppRecord('');
+            }
+        }
+
+        // Müşteri Randevularım Modal
+        function openMyAppModal() {
+            const user = getCurrentUser();
+            if(!user) return;
+            const apps = getAppData();
+            const myApps = apps.filter(a => a.name.toLowerCase() === user.name.toLowerCase());
+            const container = document.getElementById('myAppListContainer');
+            container.innerHTML = '';
+
+            if(myApps.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-400 py-8 text-sm">Henüz randevunuz bulunmuyor.</p>';
+            } else {
+                myApps.forEach(app => {
+                    container.innerHTML += `
+                        <div class="p-4 rounded-2xl bg-[#18181B] border border-[#D4AF37]/30 space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="font-serif font-bold text-[#F3E5AB] text-sm">${app.service}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${app.status==='Onaylandı'?'bg-emerald-500/20 text-emerald-300':'bg-amber-500/20 text-amber-300'}">${app.status}</span>
+                            </div>
+                            <p class="text-xs text-gray-300"><i class="fa-solid fa-clock text-[#D4AF37]"></i> ${app.date} - ${app.time}</p>
+                            ${app.message ? `<p class="text-xs text-gray-400 italic">Notunuz: "${app.message}"</p>` : ''}
+                            ${app.adminReply ? `<div class="p-2.5 rounded-xl bg-[#D4AF37]/10 border-l-2 border-[#D4AF37] text-xs text-gray-200"><b class="text-[#D4AF37]">NES Kuaför Yanıtı:</b> "${app.adminReply}"</div>` : ''}
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('myAppModal').classList.remove('hidden');
+        }
+        function closeMyAppModal() { document.getElementById('myAppModal').classList.add('hidden'); }
+
+        // Galeri Modal
+        function openGalleryItem(title, tag, imgUrl) {
+            openLightboxViewer(imgUrl, title, `Atölye çalışmalarımızdan (${tag})`, null);
+        }
+
+        // Admin Paneli
+        function openAdminModal() { document.getElementById('adminModal').classList.remove('hidden'); }
+        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
+
+        function verifyAdminLogin() {
+            if(document.getElementById('adminPassField').value === '1234') {
+                document.getElementById('adminAuthSection').classList.add('hidden');
+                document.getElementById('adminDashboardSection').classList.remove('hidden');
+                renderAdminTable('ALL');
+            } else {
+                document.getElementById('adminErrText').classList.remove('hidden');
+            }
+        }
+
+        let currentAdminFilter = 'ALL';
+        function filterAdmin(st) {
+            currentAdminFilter = st;
+            renderAdminTable(st);
+        }
+
+        function renderAdminTable(filter) {
+            const apps = getAppData();
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+
+            const filtered = apps.filter(a => filter === 'ALL' || a.status === filter);
+            if(filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center p-6 text-gray-400">Kayıt bulunamadı.</td></tr>';
+                return;
+            }
+
+            filtered.forEach(app => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-white/[0.02]">
+                        <td class="p-4 font-semibold text-white">${app.name}</td>
+                        <td class="p-4"><a href="tel:${app.phone}" class="text-[#D4AF37] underline">${app.phone}</a></td>
+                        <td class="p-4"><span class="px-2.5 py-1 rounded-md bg-[#D4AF37]/10 text-[#F3E5AB]">${app.service}</span></td>
+                        <td class="p-4 text-gray-300">${app.date} <br><b>${app.time}</b></td>
+                        <td class="p-4">
+                            ${app.message ? `<p class="italic text-gray-300 bg-white/5 p-2 rounded mb-1">"${app.message}"</p>` : ''}
+                            ${app.adminReply ? `<p class="text-[#D4AF37] text-[10px] mb-1"><b>Yanıtınız:</b> ${app.adminReply}</p>` : ''}
+                            ${app.attachedImage ? `<button onclick="openLightboxViewer('${app.attachedImage}', '${app.name}', '${app.message || 'Müşteri Notu'}', ${app.id})" class="text-[#D4AF37] underline flex items-center gap-1 mt-1"><i class="fa-solid fa-image"></i> Görseli Aç</button>` : ''}
+                        </td>
+                        <td class="p-4"><span class="px-2 py-1 rounded text-[10px] font-bold uppercase ${app.status==='Onaylandı'?'bg-emerald-500/20 text-emerald-300':'bg-amber-500/20 text-amber-300'}">${app.status}</span></td>
+                        <td class="p-4 text-center space-x-1">
+                            <button onclick="openLightboxViewer('${app.attachedImage || ''}', '${app.name}', '${app.message || 'Yanıt Ver'}', ${app.id})" class="p-1.5 rounded bg-blue-900/40 text-blue-300 hover:bg-blue-800" title="Yanıtla"><i class="fa-solid fa-message text-xs"></i></button>
+                            <button onclick="setAppStatus(${app.id}, 'Onaylandı')" class="p-1.5 rounded bg-emerald-900/40 text-emerald-300 hover:bg-emerald-800" title="Onayla"><i class="fa-solid fa-check text-xs"></i></button>
+                            <button onclick="setAppStatus(${app.id}, 'İptal')" class="p-1.5 rounded bg-amber-900/40 text-amber-300 hover:bg-amber-800" title="İptal"><i class="fa-solid fa-ban text-xs"></i></button>
+                            <button onclick="deleteSingleApp(${app.id})" class="p-1.5 rounded bg-red-900/40 text-red-300 hover:bg-red-800" title="Sil"><i class="fa-solid fa-trash text-xs"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        let activeLightboxAppId = null;
+        function openLightboxViewer(imgSrc, title, note, appId) {
+            activeLightboxAppId = appId;
+            const container = document.getElementById('lightboxImgContainer');
+            if(imgSrc) {
+                container.innerHTML = `<img src="${imgSrc}" class="w-full h-full object-cover">`;
+            } else {
+                container.innerHTML = `<div class="text-gray-500 text-xs italic">Görsel bulunmuyor</div>`;
+            }
+            document.getElementById('lightboxTitle').innerText = title;
+            document.getElementById('lightboxNote').innerText = note;
+            document.getElementById('lightboxReplyInput').value = '';
+            document.getElementById('lightboxModal').classList.remove('hidden');
+        }
+
+        function closeLightbox() { document.getElementById('lightboxModal').classList.add('hidden'); }
+
+        function sendLightboxReply() {
+            const txt = document.getElementById('lightboxReplyInput').value.trim();
+            if(!txt) return alert('Lütfen yanıt yazın.');
+            const apps = getAppData();
+            const target = apps.find(a => a.id === activeLightboxAppId);
+            if(target) {
+                target.adminReply = txt;
+                saveAppData(apps);
+                alert('Yanıt başarıyla gönderildi!');
+                closeLightbox();
+                renderAdminTable(currentAdminFilter);
+            }
+        }
+
+        function setAppStatus(id, st) {
+            const apps = getAppData();
+            const target = apps.find(a => a.id === id);
+            if(target) { target.status = st; saveAppData(apps); renderAdminTable(currentAdminFilter); }
+        }
+
+        function deleteSingleApp(id) {
+            let apps = getAppData();
+            apps = apps.filter(a => a.id !== id);
+            saveAppData(apps);
+            renderAdminTable(currentAdminFilter);
+        }
+
+        function clearAllAppointments() {
+            if(confirm('Tüm randevular silinsin mi?')) {
+                localStorage.removeItem('nes_appointments');
+                renderAdminTable(currentAdminFilter);
+            }
+        }
+
+        updateNavAuth();
+    </script>
+</body>
+</html>
