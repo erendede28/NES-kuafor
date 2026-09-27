@@ -1456,7 +1456,7 @@
                     <td class="p-3 text-xs text-gray-300"><span class="gold-text font-semibold">${app.service}</span><br>${app.date} / ${app.time}</td>
                     <td class="p-3 text-xs text-gray-200">${app.note || 'Not belirtilmemiş'}</td>
                     <td class="p-3">
-                        ${app.image ? `<button onclick="window.openLightboxImage('${app.image}', '${app.note \vert{}\vert{} ''}',${app.id})" class="text-xs text-[#C5A059] underline"><i class="fa-solid fa-image"></i> Görseli Gör</button>` : '<span class="text-gray-600 text-xs">Görsel yok</span>'}
+                        ${app.image ? `<button onclick="window.openLightboxImage('${app.image}', '${app.note || ''}',${app.id})" class="text-xs text-[#C5A059] underline"><i class="fa-solid fa-image"></i> Görseli Gör</button>` : '<span class="text-gray-600 text-xs">Görsel yok</span>'}
                     </td>
                     <td class="p-3">
                         <button onclick="window.openLightboxImage('${app.image || ''}', '${app.note || 'Not yok'}', ${app.id})" class="text-xs bg-[#C5A059]/20 text-[#C5A059] border border-[#C5A059] px-3 py-1.5 rounded-lg hover:bg-[#C5A059] hover:text-black transition font-semibold">
