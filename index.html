@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NES KUAFÖR SALONU - VIP Saç Tasarım Atölyesi</title>
+
+    <!-- Google Search Console Doğrulama Kodu -->
+    <meta name="google-site-verification" content="nrVbB2JliXIdpuhjVKcPdv54yAoHYzqcFwYXWXRg6Sc" />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -104,15 +108,7 @@
                         </div>
                     </div>
                 </div>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nes Kuaför</title>
-    
-    <!-- Google doğrulama kodunu buraya yapıştıracaksınız -->
-    <meta name="google-site-verification" content="nrVbB2JliXIdpuhjVKcPdv54yAoHYzqcFwYXWXRg6Sc" />
-    
-</head>
+
                 <!-- Logo -->
                 <a href="#" class="flex items-center gap-3 group">
                     <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center text-black font-bold shadow-lg shadow-[#C5A059]/20 group-hover:scale-105 transition">
@@ -1482,7 +1478,7 @@
                     <td class="p-3 text-xs text-gray-300"><span class="gold-text font-semibold">${app.service}</span><br>${app.date} / ${app.time}</td>
                     <td class="p-3 text-xs text-gray-200">${app.note || 'Not belirtilmemiş'}</td>
                     <td class="p-3">
-                        ${app.image ? `<button onclick="window.openLightboxImage('${app.image}', '${app.note || ''}', ${app.id})" class="text-xs text-[#C5A059] underline"><i class="fa-solid fa-image"></i> Görseli Gör</button>` : '<span class="text-gray-600 text-xs">Görsel yok</span>'}
+                        ${app.image ? `<button onclick="window.openLightboxImage('${app.image}', '${app.note \vert{}\vert{} ''}',${app.id})" class="text-xs text-[#C5A059] underline"><i class="fa-solid fa-image"></i> Görseli Gör</button>` : '<span class="text-gray-600 text-xs">Görsel yok</span>'}
                     </td>
                     <td class="p-3">
                         <button onclick="window.openLightboxImage('${app.image || ''}', '${app.note || 'Not yok'}', ${app.id})" class="text-xs bg-[#C5A059]/20 text-[#C5A059] border border-[#C5A059] px-3 py-1.5 rounded-lg hover:bg-[#C5A059] hover:text-black transition font-semibold">
@@ -1521,7 +1517,7 @@
                     <td class="p-3 font-semibold text-white">${u.name}</td>
                     <td class="p-3 text-gray-400">${u.pass}</td>
                     <td class="p-3">
-                        ${hasActiveCoupon ? `<span class="text-xs text-amber-400 font-bold bg-amber-950/40 border border-amber-800 px-2.5 py-1 rounded-full">${couponInfo.code} (%${couponInfo.discountRate*100})</span>` : '<span class="text-xs text-gray-500">Aktif Kupon Yok</span>'}
+                        ${hasActiveCoupon ? `<span class="text-xs text-amber-400 font-bold bg-amber-950/40 border border-amber-800 px-2.5 py-1 rounded-full">${couponInfo.code} (\%${couponInfo.discountRate*100})</span>` : '<span class="text-xs text-gray-500">Aktif Kupon Yok</span>'}
                     </td>
                     <td class="p-3 flex items-center gap-1.5">
                         <select id="couponSelect_${u.name.replace(/\s+/g, '_')}" class="bg-[#0A0A0A] border border-gray-800 text-white text-xs p-1.5 rounded-lg">
